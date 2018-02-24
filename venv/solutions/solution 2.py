@@ -4,21 +4,18 @@ import csv
 class CarBase:
     def __init__(self, brand, photo_file_name, carrying):
         try:
-            if not brand:
-                raise ValueError
             self.brand = brand
             self.photo_file_name = photo_file_name
             self.carrying = float(carrying)
-            self.get_photo_file_ext()
         except:
             raise
 
     def get_photo_file_ext(self):
         res = os.path.splitext(self.photo_file_name)
-        if res[1] == '':
-            raise ValueError
-        return res[1]
-
+        try:
+            return res[1]
+        except:
+            return ''
 
 
 
@@ -55,8 +52,6 @@ class Truck(CarBase):
 class SpecMachine(CarBase):
     def __init__(self, brand, photo_file_name, carrying, extra):
         super().__init__(brand, photo_file_name, carrying)
-        if not extra:
-            raise ValueError
         self.extra = extra
 
 
