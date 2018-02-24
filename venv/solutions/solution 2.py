@@ -7,7 +7,7 @@ class CarBase:
             self.brand = brand
             self.photo_file_name = photo_file_name
             self.carrying = float(carrying)
-            if not brand or not photo_file_name or not carrying or not self.get_photo_file_ext():
+            if not brand or not photo_file_name or not carrying:
                 raise ValueError
         except:
             raise
