@@ -7,7 +7,7 @@ class CarBase:
             self.brand = brand
             self.photo_file_name = photo_file_name
             self.carrying = float(carrying)
-            if not brand or not photo_file_name or not carrying:
+            if not brand or not photo_file_name or not carrying or not self.get_photo_file_ext():
                 raise ValueError
         except:
             raise
@@ -35,14 +35,12 @@ class Truck(CarBase):
     def __init__(self, brand, photo_file_name, carrying, body_whl):
         super().__init__(brand, photo_file_name, carrying)
         try:
-            if not body_whl or None:
-                body_whl = '0x0x0'
-
-            self.body_whl = body_whl.split('x')
-            self.body_length = float(self.body_whl[0]) or 0.0
-            self.body_width = float(self.body_whl[1]) or 0.0
-            self.body_height = float(self.body_whl[2]) or 0.0
-            del self.body_whl
+            body_whl = body_whl.split('x')
+            if body_whl.__len__() != 3:
+                body_whl = [0, 0, 0]
+            self.body_length = float(body_whl[0])
+            self.body_width = float(body_whl[1])
+            self.body_height = float(body_whl[2])
         except:
             raise
 
@@ -73,9 +71,9 @@ def get_car_list(csv_filename):
         reader = csv.reader(csv_fd, delimiter=';')
         next(reader)  # пропускаем заголовок
         for row in reader:
-            if row.__len__() != 7:
-                continue
             try:
+                if row.__len__() != 7:
+                    continue
                 if row[0] == 'car':
                     car_list.append(Car(row[1], row[3], row[5], row[2]))
                 elif row[0] == 'truck':
@@ -84,9 +82,6 @@ def get_car_list(csv_filename):
                     car_list.append(SpecMachine(row[1], row[3], row[5], row[6]))
             except:
                 continue
-            #print(row)
     return car_list
 
-#cars = get_car_list('/home/goroson/Downloads/csv.csv')
-
-
+#cars = get_car_list('/home/goroson/Downloads/cars.csv')
