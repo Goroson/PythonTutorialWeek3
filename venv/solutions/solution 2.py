@@ -4,20 +4,18 @@ import csv
 class CarBase:
     def __init__(self, brand, photo_file_name, carrying):
         try:
-            if not brand or not photo_file_name or not carrying:
-                raise ValueError
             self.brand = brand
             self.photo_file_name = photo_file_name
             self.carrying = float(carrying)
+            if not brand or not photo_file_name or not carrying or not self.get_photo_file_ext():
+                raise ValueError
         except:
             raise
 
     def get_photo_file_ext(self):
         res = os.path.splitext(self.photo_file_name)
-        try:
-            return res[1]
-        except:
-            return ''
+        return res[1]
+
 
 
 
@@ -31,8 +29,7 @@ class Car(CarBase):
             raise
 
     def __str__(self):
-        #print('car with {0} brand, {1} photo file name, {2} carrying weight, {3} passengers'.format(self.brand, self.photo_file_name, self.carrying, self.passenger_seats_count))
-        pass
+        return('car with {0} brand, {1} photo file name, {2} carrying weight, {3} passengers'.format(self.brand, self.photo_file_name, self.carrying, self.passenger_seats_count))
 
 class Truck(CarBase):
     def __init__(self, brand, photo_file_name, carrying, body_whl):
@@ -52,6 +49,8 @@ class Truck(CarBase):
     def get_body_volume(self):
         return (self.body_length * self.body_height * self.body_width)
 
+    def __str__(self):
+        return('car with {0} brand, {1} photo file name, {2} carrying weight, {3} volume'.format(self.brand, self.photo_file_name, self.carrying, self.get_body_volume()))
 
 
 class SpecMachine(CarBase):
@@ -60,6 +59,9 @@ class SpecMachine(CarBase):
         if not extra:
             raise ValueError
         self.extra = extra
+
+    def __str__(self):
+        return ('car with {0} brand, {1} photo file name, {2} carrying weight, {3}'.format(self.brand, self.photo_file_name, self.carrying, self.extra))
 
 
 
@@ -82,4 +84,9 @@ def get_car_list(csv_filename):
                     car_list.append(SpecMachine(row[1], row[3], row[5], row[6]))
             except:
                 continue
+            #print(row)
     return car_list
+
+#cars = get_car_list('/home/goroson/Downloads/csv.csv')
+
+
