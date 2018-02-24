@@ -82,21 +82,4 @@ def get_car_list(csv_filename):
                     car_list.append(SpecMachine(row[1], row[3], row[5], row[6]))
             except:
                 continue
-
-            print(row)
-
     return car_list
-
-cars = get_car_list('/home/goroson/Downloads/csv.csv')
-
-
-'''
-with open('/home/goroson/Downloads/cars.csv', newline='') as f:
-        dk = csv.DictReader(f, delimiter=';')
-        for row in dk:
-            print(row)
-            if row['car_type']:
-                print('naisu')
-
-'''
-
