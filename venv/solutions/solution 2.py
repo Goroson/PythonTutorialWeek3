@@ -4,6 +4,8 @@ import csv
 class CarBase:
     def __init__(self, brand, photo_file_name, carrying):
         try:
+            if not brand or not photo_file_name or not carrying:
+                raise ValueError
             self.brand = brand
             self.photo_file_name = photo_file_name
             self.carrying = float(carrying)
@@ -19,6 +21,7 @@ class CarBase:
 
 
 
+
 class Car(CarBase):
     def __init__(self, brand, photo_file_name, carrying, passenger_seats_count):
         super().__init__(brand,photo_file_name, carrying)
@@ -27,7 +30,9 @@ class Car(CarBase):
         except:
             raise
 
-
+    def __str__(self):
+        #print('car with {0} brand, {1} photo file name, {2} carrying weight, {3} passengers'.format(self.brand, self.photo_file_name, self.carrying, self.passenger_seats_count))
+        pass
 
 class Truck(CarBase):
     def __init__(self, brand, photo_file_name, carrying, body_whl):
@@ -52,6 +57,8 @@ class Truck(CarBase):
 class SpecMachine(CarBase):
     def __init__(self, brand, photo_file_name, carrying, extra):
         super().__init__(brand, photo_file_name, carrying)
+        if not extra:
+            raise ValueError
         self.extra = extra
 
 
@@ -76,4 +83,20 @@ def get_car_list(csv_filename):
             except:
                 continue
 
+            print(row)
+
     return car_list
+
+cars = get_car_list('/home/goroson/Downloads/csv.csv')
+
+
+'''
+with open('/home/goroson/Downloads/cars.csv', newline='') as f:
+        dk = csv.DictReader(f, delimiter=';')
+        for row in dk:
+            print(row)
+            if row['car_type']:
+                print('naisu')
+
+'''
+
