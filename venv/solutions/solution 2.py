@@ -70,7 +70,7 @@ def get_car_list(csv_filename):
     car_list = []
     with open(csv_filename) as csv_fd:
         reader = csv.reader(csv_fd, delimiter=';')
-        next(reader)  # пропускаем заголовок
+        #next(reader)  # пропускаем заголовок
         for row in reader:
             try:
                 if row.__len__() != 7:
@@ -83,7 +83,8 @@ def get_car_list(csv_filename):
                     car_list.append(SpecMachine(row[0], row[1], row[3], row[5], row[6]))
             except:
                 continue
-            #print(row)
     return car_list
 
-#cars = get_car_list('/home/goroson/Downloads/csv.csv')
+cars = get_car_list('/home/goroson/Downloads/cars2.csv')
+for car in cars:
+    print(car.__str__())
